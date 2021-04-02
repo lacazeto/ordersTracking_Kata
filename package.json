@@ -1,0 +1,27 @@
+{
+  "name": "parcelLab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bootstrap": "npm install && lerna bootstrap",
+    "dev": "lerna run --parallel dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 120,
+    "useTabs": false,
+    "trailingComma": "es5",
+    "semi": true
+  }
+}
