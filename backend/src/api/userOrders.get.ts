@@ -1,6 +1,8 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { isNotEmail } from "../utils/helpers";
-import { readFileSync } from "fs";
+import { createReadStream } from "fs";
+import { Tracking } from "../types/orders";
+import csv from "csv-parser";
 import path from "path";
 
 interface UserOdersGetRequest extends Request {
@@ -20,18 +22,27 @@ const validator = (req: UserOdersGetRequest, res: Response, next: NextFunction):
   next();
 };
 
-const route = (req: UserOdersGetRequest, res: Response) => {
-  // const {
-  //   body: { email },
-  // } = req;
+const route = async (req: UserOdersGetRequest, res: Response) => {
+  const {
+    body: { email },
+  } = req;
 
-  let fileContents;
-  try {
-    fileContents = readFileSync(path.resolve(__dirname, "../data/trackings.csv"), "utf8");
-  } catch (e) {
-    console.log(e);
-    return res.sendStatus(500);
-  }
+  const fileContents: Tracking[] = [];
+
+  await new Promise((resolve) => {
+    createReadStream(path.resolve(__dirname, "../data/trackings.csv"))
+      .on("error", (error) => {
+        console.log(error);
+        return res.sendStatus(500);
+      })
+      .pipe(csv({ separator: ";" }))
+      .on("data", (data: Tracking) => {
+        if (data.email === email) fileContents.push(data);
+      })
+      .on("end", () => {
+        resolve(fileContents);
+      });
+  });
 
   return res.json(fileContents);
 };
