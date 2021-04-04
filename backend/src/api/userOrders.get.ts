@@ -2,7 +2,7 @@ import { Router, Response, NextFunction } from "express";
 import { isNotEmail } from "../utils/helpers";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { Tracking, UserOdersGetRequest } from "../types";
+import { OrderTracking, UserOdersGetRequest } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
@@ -21,7 +21,7 @@ const route = async (req: UserOdersGetRequest, res: Response) => {
     body: { email },
   } = req;
 
-  const fileContents: Tracking[] = [];
+  const fileContents: OrderTracking[] = [];
 
   await new Promise((resolve) => {
     createReadStream(path.resolve(__dirname, "../data/trackings.csv"))
@@ -30,7 +30,7 @@ const route = async (req: UserOdersGetRequest, res: Response) => {
         return res.sendStatus(500);
       })
       .pipe(csv({ separator: ";" }))
-      .on("data", (data: Tracking) => {
+      .on("data", (data: OrderTracking) => {
         if (data.email === email) fileContents.push(data);
       })
       .on("end", () => {

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { Request } from "express";
 
-export type Tracking = {
+export type OrderTracking = {
   orderNo: string;
   tracking_number: string;
   courier: string;
@@ -16,7 +16,7 @@ export type Tracking = {
   product_name: string;
 };
 
-export type Checkpoint = {
+export type OrderCheckpoint = {
   tracking_number: string;
   location: string;
   timestamp: string;

@@ -1,18 +1,33 @@
-import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NotFound from "./pages/notFound";
+import { Container } from "@material-ui/core";
+import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  header: {
+    height: "10vH",
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+
   return (
     <div className="App">
+      <header className={classes.header} />
       <Router>
         <main>
-          <Switch>
-            <Route exact path="/"></Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
+          <Container maxWidth="xs">
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </Container>
         </main>
       </Router>
     </div>

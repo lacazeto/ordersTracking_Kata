@@ -1,7 +1,7 @@
 import { Router, Response, NextFunction } from "express";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { Checkpoint, orderCheckpointsRequest } from "../types";
+import { OrderCheckpoint, orderCheckpointsRequest } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
@@ -20,7 +20,7 @@ const route = async (req: orderCheckpointsRequest, res: Response) => {
     body: { trackingNumber },
   } = req;
 
-  const fileContents: Checkpoint[] = [];
+  const fileContents: OrderCheckpoint[] = [];
 
   await new Promise((resolve) => {
     createReadStream(path.resolve(__dirname, "../data/checkpoints.csv"))
@@ -29,7 +29,7 @@ const route = async (req: orderCheckpointsRequest, res: Response) => {
         return res.sendStatus(500);
       })
       .pipe(csv({ separator: ";" }))
-      .on("data", (data: Checkpoint) => {
+      .on("data", (data: OrderCheckpoint) => {
         if (data.tracking_number === trackingNumber) fileContents.push(data);
       })
       .on("end", () => {
