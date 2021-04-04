@@ -1,16 +1,11 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Response, NextFunction } from "express";
 import { isNotEmail } from "../utils/helpers";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { Tracking } from "../types";
+import { Tracking, UserOdersGetRequest } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
-interface UserOdersGetRequest extends Request {
-  body: {
-    email: string;
-  };
-}
 const validator = (req: AppRequest, res: Response, next: NextFunction): Response | void => {
   const { email } = req.body;
 

@@ -1,15 +1,10 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Response, NextFunction } from "express";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { Checkpoint } from "../types";
+import { Checkpoint, orderCheckpointsRequest } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
-interface orderCheckpointsRequest extends Request {
-  body: {
-    trackingNumber: string;
-  };
-}
 const validator = (req: AppRequest, res: Response, next: NextFunction): Response | void => {
   const { trackingNumber } = req.body;
 
@@ -38,6 +33,7 @@ const route = async (req: orderCheckpointsRequest, res: Response) => {
         if (data.tracking_number === trackingNumber) fileContents.push(data);
       })
       .on("end", () => {
+        fileContents.sort((x, y) => Date.parse(x.timestamp) - Date.parse(y.timestamp));
         resolve(fileContents);
       });
   });

@@ -28,3 +28,15 @@ export type Checkpoint = {
 export interface AppRequest extends Request {
   body: Record<string, unknown>;
 }
+
+export interface UserOdersGetRequest extends Request {
+  body: {
+    email: string;
+  };
+}
+
+export interface orderCheckpointsRequest extends Request {
+  body: {
+    trackingNumber: string;
+  };
+}
