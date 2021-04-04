@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { Request } from "express";
 
 export type Tracking = {
   orderNo: string;
@@ -14,3 +15,7 @@ export type Tracking = {
   quantity: string;
   product_name: string;
 };
+
+export interface AppRequest extends Request {
+  body: Record<string, unknown>;
+}

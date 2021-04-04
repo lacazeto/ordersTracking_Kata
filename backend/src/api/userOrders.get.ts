@@ -1,19 +1,18 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { isNotEmail } from "../utils/helpers";
+import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { Tracking } from "../types/orders";
+import { Tracking } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
 interface UserOdersGetRequest extends Request {
   body: {
-    email?: string;
+    email: string;
   };
 }
-
-const validator = (req: UserOdersGetRequest, res: Response, next: NextFunction): Response | void => {
-  const { body } = req;
-  const email = body?.email;
+const validator = (req: AppRequest, res: Response, next: NextFunction): Response | void => {
+  const { email } = req.body;
 
   if (!email || typeof email !== "string" || isNotEmail(email)) {
     return res.sendStatus(400);
