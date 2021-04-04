@@ -3,7 +3,7 @@ import { ordersRouter } from "./src/api/userOrders.get";
 import { orderCheckpointsRouter } from "./src/api/orderCheckpoints.get";
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(express.json());
 
