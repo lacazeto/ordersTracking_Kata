@@ -16,6 +16,15 @@ export type Tracking = {
   product_name: string;
 };
 
+export type Checkpoint = {
+  tracking_number: string;
+  location: string;
+  timestamp: string;
+  status: string;
+  status_text: string;
+  status_detail: string;
+};
+
 export interface AppRequest extends Request {
   body: Record<string, unknown>;
 }
