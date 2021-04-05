@@ -33,7 +33,7 @@ const Orders = (): React.ReactElement => {
                 <Box display="flex" justifyContent="space-between" mt={3} p={2}>
                   <Box>
                     <Typography variant="body1" align="left">
-                      Order Number
+                      <small>Order Number</small>
                     </Typography>
                     <Typography variant="body2" align="left">
                       <strong>{order.orderNo}</strong>
@@ -41,14 +41,16 @@ const Orders = (): React.ReactElement => {
                   </Box>
                   <Box>
                     <Typography variant="body1" align="left">
-                      Current Status
+                      <small>Current Status</small>
                     </Typography>
                     <Typography variant="body2" align="left">
                       <strong>{checkPoints && checkPoints[order.tracking_number]?.status_text}</strong>
                     </Typography>
                   </Box>
                 </Box>
-                <AddressDisplayField order={order} />
+                <Box p={2}>
+                  <AddressDisplayField order={order} />
+                </Box>
               </Paper>
             </Link>
           ))}

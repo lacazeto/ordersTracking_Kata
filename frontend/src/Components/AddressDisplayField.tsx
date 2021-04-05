@@ -10,9 +10,9 @@ const AddressDisplayField = (props: Props): React.ReactElement => {
   const { order } = props;
 
   return (
-    <Box p={2}>
+    <Box>
       <Typography variant="body1" align="left">
-        Delivery Address
+        <small>Delivery Address</small>
       </Typography>
       <Typography variant="body2" align="left">
         <strong>

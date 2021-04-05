@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
+import OrderDetails from "./pages/OrderDetails";
 
 function App() {
   return (
@@ -19,8 +20,8 @@ function App() {
               <Route exact path="/orders">
                 <Orders />
               </Route>
-              <Route exact path="/status">
-                <NotFound />
+              <Route path="/order/:orderNo">
+                <OrderDetails />
               </Route>
               <Route path="*">
                 <NotFound />
