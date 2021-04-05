@@ -35,8 +35,8 @@ export interface UserOdersGetRequest extends Request {
   };
 }
 
-export interface orderStatusRequest extends Request {
+export interface OrderStatusRequest extends Request {
   body: {
-    trackingNumber: string;
+    trackingNumbers: string[];
   };
 }

@@ -1,26 +1,30 @@
 import { Router, Response, NextFunction } from "express";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { OrderStatus, orderStatusRequest } from "../types";
+import { OrderStatus, OrderStatusRequest } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
 const validator = (req: AppRequest, res: Response, next: NextFunction): Response | void => {
-  const { trackingNumber } = req.body;
+  const { trackingNumbers } = req.body;
 
-  if (!trackingNumber || typeof trackingNumber !== "string" || trackingNumber.length < 1) {
+  if (!trackingNumbers || !Array.isArray(trackingNumbers) || trackingNumbers.length < 1) {
     return res.sendStatus(400);
+  }
+
+  for (const element of trackingNumbers) {
+    if (typeof element !== "string") return res.sendStatus(400);
   }
 
   next();
 };
 
-const route = async (req: orderStatusRequest, res: Response) => {
+const route = async (req: OrderStatusRequest, res: Response) => {
   const {
-    body: { trackingNumber },
+    body: { trackingNumbers },
   } = req;
 
-  const fileContents: OrderStatus[] = [];
+  const fileTrackings: { [key: string]: OrderStatus[] } = {};
 
   await new Promise((_resolve) => {
     createReadStream(path.resolve(__dirname, "../data/checkpoints.csv"))
@@ -30,11 +34,20 @@ const route = async (req: orderStatusRequest, res: Response) => {
       })
       .pipe(csv({ separator: ";" }))
       .on("data", (data: OrderStatus) => {
-        if (data.tracking_number === trackingNumber) fileContents.push(data);
+        if (trackingNumbers.includes(data.tracking_number)) {
+          fileTrackings[data.tracking_number] = fileTrackings[data.tracking_number] || [];
+          fileTrackings[data.tracking_number].push(data);
+        }
       })
       .on("end", () => {
-        fileContents.sort((x, y) => Date.parse(x.timestamp) - Date.parse(y.timestamp));
-        return res.json(fileContents[fileContents.length - 1]);
+        const mostRecentTracking: { [key: string]: OrderStatus } = {};
+
+        for (const [key, value] of Object.entries(fileTrackings)) {
+          fileTrackings[key] = value.sort((x, y) => Date.parse(y.timestamp) - Date.parse(x.timestamp));
+          mostRecentTracking[key] = fileTrackings[key][0];
+        }
+
+        return res.json(mostRecentTracking);
       });
   });
 };
