@@ -1,8 +1,8 @@
 import React from "react";
 import { TextField, Paper, Box, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { OrderTracking, LatestCheckPoints } from "@order-management-kata/backend/src/types/index";
 import { fetchOrdersData } from "../api";
+import { orderDataContext } from "../context";
 import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home(): React.ReactElement {
   const classes = useStyles();
   const [email, setEmail] = React.useState<string | null>(null);
-  const [orders, setOrders] = React.useState<OrderTracking[] | null>(null);
-  const [checkpoints, setCheckpoints] = React.useState<LatestCheckPoints | null>(null);
+  const { orders, setOrders, setCheckpoints } = React.useContext(orderDataContext);
   const [redirect, setRedirect] = React.useState<boolean>(false);
 
   const fetchOrders = async (): Promise<React.ReactElement | void> => {
@@ -31,13 +30,13 @@ export default function Home(): React.ReactElement {
 
     try {
       const [orders, checkpoints] = await fetchOrdersData(email);
-      console.log(orders, checkpoints);
 
       setOrders(orders);
       setCheckpoints(checkpoints);
 
       if (orders.length > 0) setRedirect(true);
     } catch (err) {
+      setOrders(null);
       console.error(err);
     }
   };
@@ -70,7 +69,7 @@ export default function Home(): React.ReactElement {
       {orders && orders.length === 0 && (
         <Box my={4}>
           <Typography variant="h4" align="center">
-            No orders found! {checkpoints}
+            No orders found!
           </Typography>
         </Box>
       )}
