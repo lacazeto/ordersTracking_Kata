@@ -22,7 +22,7 @@ export type OrderStatus = {
   timestamp: string;
   status: string;
   status_text: string;
-  status_detail: string;
+  status_details: string;
 };
 
 export type LatestCheckPoints = { [key: string]: OrderStatus };
