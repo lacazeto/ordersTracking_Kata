@@ -3,6 +3,7 @@ import { TextField, Paper, Box, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { OrderTracking, LatestCheckPoints } from "@order-management-kata/backend/src/types/index";
 import { fetchOrdersData } from "../api";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -23,6 +24,7 @@ export default function Home(): React.ReactElement {
   const [email, setEmail] = React.useState<string | null>(null);
   const [orders, setOrders] = React.useState<OrderTracking[] | null>(null);
   const [checkpoints, setCheckpoints] = React.useState<LatestCheckPoints | null>(null);
+  const [redirect, setRedirect] = React.useState<boolean>(false);
 
   const fetchOrders = async (): Promise<React.ReactElement | void> => {
     if (!email) return;
@@ -33,10 +35,16 @@ export default function Home(): React.ReactElement {
 
       setOrders(orders);
       setCheckpoints(checkpoints);
+
+      if (orders.length > 0) setRedirect(true);
     } catch (err) {
       console.error(err);
     }
   };
+
+  if (redirect) {
+    return <Redirect to="/orders" />;
+  }
 
   return (
     <>
