@@ -25,6 +25,7 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": false,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
