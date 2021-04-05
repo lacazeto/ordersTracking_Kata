@@ -1,24 +1,16 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "@material-ui/core";
+import Header from "./Components/Header";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme) => ({
-  header: {
-    height: "10vH",
-  },
-}));
 
 function App() {
-  const classes = useStyles();
-
   return (
     <div className="App">
-      <header className={classes.header} />
       <Router>
         <main>
+          <Header />
           <Container maxWidth="xs">
             <Switch>
               <Route exact path="/">
@@ -26,6 +18,9 @@ function App() {
               </Route>
               <Route exact path="/orders">
                 <Orders />
+              </Route>
+              <Route exact path="/status">
+                <NotFound />
               </Route>
               <Route path="*">
                 <NotFound />
