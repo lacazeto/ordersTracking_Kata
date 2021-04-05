@@ -16,7 +16,7 @@ export type OrderTracking = {
   product_name: string;
 };
 
-export type OrderCheckpoint = {
+export type OrderStatus = {
   tracking_number: string;
   location: string;
   timestamp: string;
@@ -35,7 +35,7 @@ export interface UserOdersGetRequest extends Request {
   };
 }
 
-export interface orderCheckpointsRequest extends Request {
+export interface orderStatusRequest extends Request {
   body: {
     trackingNumber: string;
   };
