@@ -1,8 +1,9 @@
+import React from "react";
 import { Paper, Typography, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { orderDataContext } from "../context";
+import AddressDisplayField from "../Components/AddressDisplayField";
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -27,7 +28,7 @@ const Orders = (): React.ReactElement => {
 
         {orders &&
           orders.map((order, index) => (
-            <Link className={classes.link} to="/status" key={`${order.orderNo}-${index}`}>
+            <Link className={classes.link} to={`/order/${order.orderNo}`} key={`${order.orderNo}-${index}`}>
               <Paper elevation={3}>
                 <Box display="flex" justifyContent="space-between" mt={3} p={2}>
                   <Box>
@@ -47,19 +48,7 @@ const Orders = (): React.ReactElement => {
                     </Typography>
                   </Box>
                 </Box>
-                <Box p={2}>
-                  <Typography variant="body1" align="left">
-                    Delivery Address
-                  </Typography>
-                  <Typography variant="body2" align="left">
-                    <strong>
-                      {order.street}
-                      <br />
-                    </strong>
-                    <strong>{order.zip_code} </strong>
-                    <strong>{order.city}</strong>
-                  </Typography>
-                </Box>
+                <AddressDisplayField order={order} />
               </Paper>
             </Link>
           ))}
