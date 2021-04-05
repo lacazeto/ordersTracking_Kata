@@ -1,6 +1,6 @@
 import express from "express";
-import { ordersRouter } from "./src/routes/userOrders.get";
-import { orderStatusRouter } from "./src/routes/orderStatus.get";
+import { ordersRouter } from "./src/routes/userOrders.post";
+import { orderStatusRouter } from "./src/routes/orderStatus.post";
 
 const app = express();
 const port = 4000;
@@ -13,6 +13,8 @@ app.get("*", (_req, res) => {
 app.use("/orders", ordersRouter);
 app.use("/status", orderStatusRouter);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+
+export default server;
