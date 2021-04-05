@@ -1,9 +1,8 @@
 import React from "react";
 import { TextField, Paper, Box, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { OrderTracking } from "@order-management-kata/backend/src/types/index";
-import { AxiosResponse } from "../types/index";
-import axios from "axios";
+import { OrderTracking, LatestCheckPoints } from "@order-management-kata/backend/src/types/index";
+import { fetchOrdersData } from "../api";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -23,15 +22,17 @@ export default function Home(): React.ReactElement {
   const classes = useStyles();
   const [email, setEmail] = React.useState<string | null>(null);
   const [orders, setOrders] = React.useState<OrderTracking[] | null>(null);
+  const [checkpoints, setCheckpoints] = React.useState<LatestCheckPoints | null>(null);
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (): Promise<React.ReactElement | void> => {
     if (!email) return;
 
     try {
-      const res: AxiosResponse<OrderTracking[]> = await axios.post("/orders", { email });
-      const { data } = res;
+      const [orders, checkpoints] = await fetchOrdersData(email);
+      console.log(orders, checkpoints);
 
-      setOrders(data);
+      setOrders(orders);
+      setCheckpoints(checkpoints);
     } catch (err) {
       console.error(err);
     }
@@ -61,7 +62,7 @@ export default function Home(): React.ReactElement {
       {orders && orders.length === 0 && (
         <Box my={4}>
           <Typography variant="h4" align="center">
-            No orders found!
+            No orders found! {checkpoints}
           </Typography>
         </Box>
       )}
