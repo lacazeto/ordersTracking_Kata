@@ -1,6 +1,6 @@
 import express from "express";
-import { ordersRouter } from "./src/api/userOrders.get";
-import { orderStatusRouter } from "./src/api/orderStatus.get";
+import { ordersRouter } from "./src/routes/userOrders.get";
+import { orderStatusRouter } from "./src/routes/orderStatus.get";
 
 const app = express();
 const port = 4000;
