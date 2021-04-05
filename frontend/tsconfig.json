@@ -3,11 +3,7 @@
     "resolveJsonModule": true,
     "target": "es6",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "jsx": "react-jsx",
     "sourceMap": true,
@@ -32,7 +28,5 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
