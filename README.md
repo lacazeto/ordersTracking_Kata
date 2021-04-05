@@ -6,9 +6,9 @@ To setup, run:
 
 > npm run bootstrap
 
-## Run Project
+## Project Execution
 
-FrontEnd sitting on the localhost:3000  
+FrontEnd sitting on the localhost:3000
 
 BackEnd sitting on the localhost:4000
 
@@ -16,7 +16,7 @@ To start, run:
 
 > npm run dev
 
-## Run Tests
+## Tests
 
 Run:
 
