@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.default,
     margin: 0,
-    height: `calc(100vh - 64px)`,
+    height: `50vh`,
   },
   button: {
     marginTop: 20,
@@ -35,12 +35,7 @@ const NotFound = (): React.ReactElement => {
       <div className={classes.container}>
         <Typography variant="h4">404</Typography>
         <Typography variant="subtitle1">Page not found</Typography>
-        <Button
-          color="secondary"
-          aria-label="home"
-          href="/"
-          className={classes.button}
-        >
+        <Button color="secondary" aria-label="home" href="/" className={classes.button}>
           Return to Home Page
         </Button>
       </div>

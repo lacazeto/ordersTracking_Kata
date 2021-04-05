@@ -23,7 +23,7 @@ const route = async (req: UserOdersGetRequest, res: Response) => {
 
   const fileContents: OrderTracking[] = [];
 
-  await new Promise((resolve) => {
+  await new Promise((_resolve) => {
     createReadStream(path.resolve(__dirname, "../data/trackings.csv"))
       .on("error", (error) => {
         console.log(error);
@@ -34,11 +34,9 @@ const route = async (req: UserOdersGetRequest, res: Response) => {
         if (data.email === email) fileContents.push(data);
       })
       .on("end", () => {
-        resolve(fileContents);
+        return res.json(fileContents);
       });
   });
-
-  return res.json(fileContents);
 };
 
 export const ordersRouter = Router().post("/", validator, route);

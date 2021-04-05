@@ -30,6 +30,7 @@ export default function Home(): React.ReactElement {
     try {
       const res: AxiosResponse<OrderTracking[]> = await axios.post("/orders", { email });
       const { data } = res;
+
       setOrders(data);
     } catch (err) {
       console.error(err);
