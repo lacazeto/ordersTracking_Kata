@@ -55,6 +55,7 @@ export default function Home(): React.ReactElement {
           <form className={classes.form} noValidate autoComplete="off">
             <TextField
               label="Email"
+              inputProps={{ placeholder: "Email" }}
               defaultValue=""
               variant="outlined"
               onChange={(event) => setEmail(event.target.value)}
