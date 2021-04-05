@@ -1,7 +1,7 @@
 import { Router, Response, NextFunction } from "express";
 import { AppRequest } from "../types/index";
 import { createReadStream } from "fs";
-import { OrderStatus, OrderStatusRequest } from "../types";
+import { OrderStatus, OrderStatusRequest, LatestCheckPoints } from "../types";
 import csv from "csv-parser";
 import path from "path";
 
@@ -40,14 +40,14 @@ const route = async (req: OrderStatusRequest, res: Response) => {
         }
       })
       .on("end", () => {
-        const mostRecentTracking: { [key: string]: OrderStatus } = {};
+        const latestCheckpoints: LatestCheckPoints = {};
 
         for (const [key, value] of Object.entries(fileTrackings)) {
           fileTrackings[key] = value.sort((x, y) => Date.parse(y.timestamp) - Date.parse(x.timestamp));
-          mostRecentTracking[key] = fileTrackings[key][0];
+          latestCheckpoints[key] = fileTrackings[key][0];
         }
 
-        return res.json(mostRecentTracking);
+        return res.json(latestCheckpoints);
       });
   });
 };

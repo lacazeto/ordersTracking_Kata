@@ -25,6 +25,8 @@ export type OrderStatus = {
   status_detail: string;
 };
 
+export type LatestCheckPoints = { [key: string]: OrderStatus };
+
 export interface AppRequest extends Request {
   body: Record<string, unknown>;
 }
